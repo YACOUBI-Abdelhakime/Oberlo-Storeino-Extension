@@ -5,25 +5,28 @@
 			<router-link class="line" to="/about">Aller à About</router-link>
 		</div>
 		<router-view/>
-		<img alt="Vue logo" src="./assets/logo.png">
-		<p>{{ $route.params.name }}</p>
-		<HelloWorld msg="Welcome "/>
+		<img alt="Vue logo" src="@/assets/logo.png">
+		<HelloWorld msg="Welcome in Chrome extension"/>
 	</div>
 </template>
  
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+//import HelloWorld from '@/components/HelloWorld.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    //HelloWorld
   },
 }
 
 </script>
 
 <style>
+body{
+	width: 350px;
+	height: 450px;
+}
 *{
 	margin: 0px;
 	padding:0px;
