@@ -20,7 +20,7 @@
         "js/content-script.js"
       ],
       "matches": [
-        "https://www.google.com/"
+        "https://*.aliexpress.com/item/*"
       ]
     }
   ],

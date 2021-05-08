@@ -17,7 +17,7 @@
   "content_scripts" : [
     {
         "js" : ["js/content-script.js"],
-        "matches" : ["https://www.google.com/"]
+        "matches" : ["https://*.aliexpress.com/item/*"]
     }
   ],
   "background": {
