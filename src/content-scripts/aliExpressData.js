@@ -1,16 +1,24 @@
+let product;
+
 module.exports.getData = function () {
-    
     const titleSelector = "div.product-info > div.product-title > h1"
     const descSelector = "#root > div > div.product-main > div > div.product-info > meta:nth-child(4)"
     const priceSelector = "#root > div > div.product-main > div > div.product-info > div.product-price > div > span"
+    const bonusPriceSelector = "#root > div > div.product-main > div > div.product-info > div.uniform-banner > div.uniform-banner-box > div:nth-child(1) > span.uniform-banner-box-price"
     const imgsSelector = "#root > div > div.product-main > div > div.img-view-wrap > div > div > div.images-view-wrap > ul > li"//array
     const propertiesSelector = "#root > div > div.product-main > div > div.product-info > div.product-sku > div > div.sku-property"//array
     
     
-    let title,desc,price,imgs,imgsURL=[],properties,arrayProp=[],productObject;
+    let title,desc,price,imgs,imgsURL=[],properties,arrayProp=[];
     title = document.querySelector(titleSelector).innerHTML;
     desc = document.querySelector(descSelector).getAttribute("content");
-    price = document.querySelector(priceSelector).innerHTML;
+    let priceDiv = document.querySelector(priceSelector);
+    if(priceDiv){
+        price = document.querySelector(priceSelector).innerHTML;
+    }else{
+        price = document.querySelector(bonusPriceSelector).innerHTML;
+    }
+    
 
     imgs = document.querySelectorAll(imgsSelector);
     imgs.forEach(function(img){
@@ -43,16 +51,13 @@ module.exports.getData = function () {
 
         i++;
     })
-    productObject = {
+    product = {
         "title":title,
         "description":desc,
         "price":price,
         "images":imgsURL,
         "properties":arrayProp,
     }
-    let p = productObject;
-    console.log("title: "+p.title+" Images: "+p.images.length+" Props0: "+p.properties[0].list)
-
+    return product;
 }
-
 

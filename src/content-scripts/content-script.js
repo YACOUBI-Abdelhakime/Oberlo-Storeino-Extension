@@ -2,15 +2,22 @@ import '@/assets/css/aliExpress.css'
 import {getData} from '@/content-scripts/aliExpressData'
 
 
+
+
   
 function addMainBtn() {
+//<span></span>
     let span = document.createElement("span");
     span.classList.value = "addcart-wrap span-container";
+//<button></button>
     let btn = document.createElement("button");
     btn.innerHTML = "Clone Product";
     btn.id = "main-btn-cloner";
-    btn.classList.value = "next-btn next-large next-btn-primary";
+    btn.classList.value = "next-btn next-large next-btn-primary"
+
     span.appendChild(btn);
+    
+    
     const div = document.querySelector("div.product-action")
     const beffor = document.querySelector("span.add-wishlist-wrap")
     div.insertBefore(span,beffor);
@@ -30,9 +37,12 @@ function addFixBtn() {
     document.getElementById("fix-btn-cloner").addEventListener("click", BtnEvent);
 }
 
+
 function BtnEvent() {
-    //alert("******************main")
-    getData()
+    let product = getData()
+    chrome.runtime.sendMessage({"order":"add-product","product":product}, function(res) {
+        console.log("return :: "+res.return);
+    });
 }
 
 
