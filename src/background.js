@@ -22,10 +22,10 @@ chrome.runtime.onMessage.addListener(async function(req,sender,sendResponse) {
 			resp = await addProduct({'id':"6093b95915833923c0823bf6",'product':req.product})
 			if(resp.data.res == "ok"){
 				console.log("TITLE :>"+resp.data.product.title)
-				sendResponse({return: resp.data.product.title});
+				sendResponse({'res':'ok',title: resp.data.product.title});
 			}else{
 				console.log("Error msg :>"+resp.data.message)
-				sendResponse({return: resp.data.message});
+				sendResponse({'res':'error',message: resp.data.message});
 			}
 
 
@@ -34,7 +34,7 @@ chrome.runtime.onMessage.addListener(async function(req,sender,sendResponse) {
 			if(e.message === "Network Error")
 				console.log("error : Pas de Connexion avec le serveur .!!!!!!")
 			else 
-				console.log("error--: "+e.message)
+				console.log("autre error: "+e.message)
 		}
 		
 			
