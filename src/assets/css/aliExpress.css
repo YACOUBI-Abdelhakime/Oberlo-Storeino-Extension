@@ -5,12 +5,13 @@
     background-color: #0787ec;
     float: left;
     margin-right: 10px;
-}
+} 
 #alertClass{
     background-color: rgb(9, 211, 9);
     height: 100%;
     width: 100%;
 }
+
 .close{
     float: right;
 }
@@ -24,6 +25,11 @@
 
 .error{
   background:#ffbebeb3;
+}
+
+.topPadding{
+  top: 56px !important;
+  padding-top: 10px !important;
 }
 
 .notify{  

@@ -1,35 +1,22 @@
 const axios = require("axios")
 
-/*browser.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-  console.log('Hello from the background')
-
-  browser.tabs.executeScript({
-    file: 'content-script.js',
-  });
-})*/
-/*console.log(sender.tab ? "from a content script:" + sender.tab.url : "from the extension");*/
-async function addProduct(body) {
+async function addProduct(token,body) {
 	let resp;
-	resp = await axios.post('http://localhost:8085/product/testadd',body)
+	let header = { headers: {"x-token": token}}
+	resp = await axios.post('http://localhost:8085/product/add',body,header)
 	return resp;
 }
-
 
 chrome.runtime.onMessage.addListener(async function(req,sender,sendResponse) {
 	if (req.order == "add-product") {
 		let resp;
 		try{
-			resp = await addProduct({'id':"6093b95915833923c0823bf6",'product':req.product})
+			resp = await addProduct(req.token,{'product':req.product})
 			if(resp.data.res == "ok"){
-				console.log("TITLE :>"+resp.data.product.title)
 				sendResponse({'res':'ok',title: resp.data.product.title});
 			}else{
-				console.log("Error msg :>"+resp.data.message)
 				sendResponse({'res':'error',message: resp.data.message});
 			}
-
-
-
 		}catch(e){
 			if(e.message === "Network Error")
 				console.log("error : Pas de Connexion avec le serveur .!!!!!!")
@@ -38,5 +25,15 @@ chrome.runtime.onMessage.addListener(async function(req,sender,sendResponse) {
 		}
 		
 			
+	}else if(req.order == "check-login"){
+		chrome.storage.sync.get('user', function(v) {
+			try{
+				v.user.fullName == null ? sendResponse({res:false}) : sendResponse({res:true,user:v.user});
+			}catch(e){
+				sendResponse({res:false});
+			}
+		});
 	}
 });
+
+

@@ -1,6 +1,69 @@
-let product;
+module.exports.addMainBtn = function() {
+    //<span></span>
+    let span = document.createElement("span");
+    span.classList.value = "addcart-wrap span-container";
+    //<button></button>
+    let btn = document.createElement("button");
+    btn.innerHTML = "Clone Product";
+    btn.id = "main-btn-cloner";
+    btn.classList.value = "next-btn next-large next-btn-primary"
+    span.appendChild(btn);
+    
+    const div = document.querySelector("div.product-action")
+    const beffor = document.querySelector("span.add-wishlist-wrap")
+    div.insertBefore(span,beffor);
 
-module.exports.getData = function () {
+    document.getElementById("main-btn-cloner").addEventListener("click", BtnEvent);
+}
+module.exports.addFixBtn = function() {
+    let btn2 = document.createElement("button");
+    btn2.innerHTML = "Clone Product";
+    btn2.id = "fix-btn-cloner";
+    btn2.classList.value = "next-btn next-large next-btn-primary";
+
+    const containerSelector = "span.buy-now-wrap.fixed-buy-now"
+    const container = document.querySelector(containerSelector)
+    container.appendChild(btn2);
+
+    document.getElementById("fix-btn-cloner").addEventListener("click", BtnEvent);
+}
+
+module.exports.addNotif = function(){
+    let elm = document.createElement("div");
+    elm.innerHTML = `
+    <div class="notify"><h3 id="notify-title"></h3> <p id="notify-content">...</p></div>
+    `
+    document.querySelector("body").appendChild(elm)
+}
+function notifyEvent(resp){ 
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+
+    if(resp.res == "ok"){ 
+        let title = resp.title.slice(0,90)
+        document.querySelector(".notify").classList.add("success");
+        document.querySelector(".notify").classList.remove("error");
+        document.querySelector("#notify-title").innerHTML="Completed with SUCCESS.";
+        document.querySelector("#notify-title").style.color = "green"
+        document.querySelector("#notify-content").innerHTML="<span>Product title : </span>"+title+"...";
+    }else{
+        document.querySelector(".notify").classList.add("error");
+        document.querySelector(".notify").classList.remove("success");
+        document.querySelector("#notify-title").style.color = "red"
+        document.querySelector("#notify-title").innerHTML="There is a problem.";
+        document.querySelector("#notify-content").innerHTML="<span>Error : </span>"+resp.message;
+    }
+
+    
+    document.querySelector(".notify").classList.toggle("active");
+    
+    setTimeout(function(){
+        document.querySelector(".notify").classList.remove("active");
+    },3000);
+}
+
+let product;
+function getData() {
     const titleSelector = "div.product-info > div.product-title > h1"
     const descSelector = "#root > div > div.product-main > div > div.product-info > meta:nth-child(4)"
     const priceSelector = "#root > div > div.product-main > div > div.product-info > div.product-price > div > span"
@@ -61,3 +124,18 @@ module.exports.getData = function () {
     return product;
 }
 
+
+function BtnEvent() {
+    chrome.runtime.sendMessage({"order":"check-login"}, function(response) {        
+        if(response.res){
+            let product = getData()
+            product.idUser = response.user.id;
+            chrome.runtime.sendMessage({"order":"add-product","product":product,"token":response.user.token}, function(response) {
+                notifyEvent(response);
+            });
+        }else{
+            console.log("falssssssssssssssssse")
+            notifyEvent({res:"error",message:"Please login first"});
+        }
+    });    
+}

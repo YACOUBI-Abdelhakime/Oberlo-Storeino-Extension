@@ -1,5 +1,6 @@
 <template>
     <div class="vue-tempalte">
+        <Header/> 
         <form>
             <h3>Forgot Password</h3>
 
@@ -10,14 +11,19 @@
 
             <button type="submit" class="btn btn-dark btn-lg btn-block">Reset password</button>
 
-        </form>
+        </form> 
     </div>
 </template>
 
 <script>
+import Header from './Header.vue';
+
     export default {
         data() {
             return {}
+        },
+        components:{
+            Header
         }
     }
 </script>

@@ -49,8 +49,8 @@ html,
 }
 
 .vertical-center .form-control:focus {
-  border-color: #ffffff;
-  box-shadow: none;
+  border-color: #1f5bff;
+  box-shadow:rgb(63, 139, 253);
 }
 
 .vertical-center h3 {
