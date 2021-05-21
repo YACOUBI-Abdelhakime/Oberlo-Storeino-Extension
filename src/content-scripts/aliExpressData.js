@@ -31,7 +31,7 @@ module.exports.addFixBtn = function() {
 module.exports.addNotif = function(){
     let elm = document.createElement("div");
     elm.innerHTML = `
-    <div class="notify"><h3 id="notify-title"></h3> <p id="notify-content">...</p></div>
+    <div class="notify"><div class="div-notify"><h3 id="notify-title"></h3> <p id="notify-content">...</p></div></div>
     `
     document.querySelector("body").appendChild(elm)
 }
@@ -40,16 +40,16 @@ function notifyEvent(resp){
     document.documentElement.scrollTop = 0;
 
     if(resp.res == "ok"){ 
-        let title = resp.title.slice(0,90)
-        document.querySelector(".notify").classList.add("success");
-        document.querySelector(".notify").classList.remove("error");
+        let title = resp.title.slice(0,40)
+        document.querySelector(".div-notify").classList.add("success");
+        document.querySelector(".div-notify").classList.remove("error");
         document.querySelector("#notify-title").innerHTML="Completed with SUCCESS.";
         document.querySelector("#notify-title").style.color = "green"
         document.querySelector("#notify-content").innerHTML="<span>Product title : </span>"+title+"...";
     }else{
-        document.querySelector(".notify").classList.add("error");
-        document.querySelector(".notify").classList.remove("success");
-        document.querySelector("#notify-title").style.color = "red"
+        document.querySelector(".div-notify").classList.add("error");
+        document.querySelector(".div-notify").classList.remove("success");
+        document.querySelector("#notify-title").style.color = "#cc0000"
         document.querySelector("#notify-title").innerHTML="There is a problem.";
         document.querySelector("#notify-content").innerHTML="<span>Error : </span>"+resp.message;
     }

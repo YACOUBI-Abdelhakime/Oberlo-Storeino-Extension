@@ -65,7 +65,22 @@ import Header from './Header.vue';
                             });
                             router.push("/home")
                         }else{
+                            document.getElementById("email").value =""
+                            document.getElementById("password").value =""
                             console.log("Error :>"+resp.data.message)
+                            document.querySelector(".notify").classList.add("error");
+                            document.querySelector(".notify").classList.remove("success");
+                            document.querySelector(".notify").classList.add("topPadding");
+                            document.querySelector("#notify-title").style.color = "red"
+                            document.querySelector("#notify-title").innerHTML="There is a problem.";
+                            document.querySelector("#notify-content").innerHTML="<span>Error : </span>"+resp.data.message;
+
+                            document.querySelector(".notify").classList.toggle("active");
+                            
+                            setTimeout(function(){
+                                document.querySelector(".notify").classList.remove("active");
+                                document.querySelector(".notify").classList.remove("topPadding");
+                            },3000);
                         } 
                            
                     })    
@@ -74,6 +89,5 @@ import Header from './Header.vue';
                     }) 
             }
         }
-        
     }
 </script>

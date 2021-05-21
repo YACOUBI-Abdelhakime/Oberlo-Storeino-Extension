@@ -59,7 +59,7 @@ import axios from "axios"
                             let code = resp.data.code;
                             chrome.storage.sync.set({ 'code' : code,'userData':data });
                             router.push("/emailConf")
-                        }else{
+                        }else{ 
                             console.log("Error :>"+resp.data.message)
                             document.querySelector(".notify").classList.add("error");
                             document.querySelector(".notify").classList.remove("success");
