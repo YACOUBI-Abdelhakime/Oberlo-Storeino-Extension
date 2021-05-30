@@ -68,24 +68,57 @@ function getData() {
     const descSelector = "#root > div > div.product-main > div > div.product-info > meta:nth-child(4)"
     const priceSelector = "#root > div > div.product-main > div > div.product-info > div.product-price > div > span"
     const bonusPriceSelector = "#root > div > div.product-main > div > div.product-info > div.uniform-banner > div.uniform-banner-box > div:nth-child(1) > span.uniform-banner-box-price"
+    const comparPriceSelector = "#root > div > div.product-main > div > div.product-info > div.product-price > div.product-price-original > div > span"
+    const bonusComparPriceSelector = "#root > div > div.product-main > div > div.product-info > div.uniform-banner > div.uniform-banner-box > div:nth-child(1) > span.uniform-banner-box-discounts > span:nth-child(1)"
     const imgsSelector = "#root > div > div.product-main > div > div.img-view-wrap > div > div > div.images-view-wrap > ul > li"//array
     const propertiesSelector = "#root > div > div.product-main > div > div.product-info > div.product-sku > div > div.sku-property"//array
     
     
-    let title,desc,price,imgs,imgsURL=[],properties,arrayProp=[];
+    let title,desc,price,comparPrice,imgs,imgsURL=[],properties,arrayProp=[];
     title = document.querySelector(titleSelector).innerHTML;
     desc = document.querySelector(descSelector).getAttribute("content");
     let priceDiv = document.querySelector(priceSelector);
     if(priceDiv){
-        price = document.querySelector(priceSelector).innerHTML;
+        price = document.querySelector(priceSelector).innerHTML
+        try{
+            comparPrice = document.querySelector(comparPriceSelector).innerHTML;
+            comparPrice.includes("-") ? comparPrice = comparPrice.split("-")[1] : comparPrice = comparPrice.split(" ")[1]
+        }catch(e){console.log(e)}
+
+        let euro = price.includes("€")
+        price.includes("-") ? price = price.split("-")[1] : price = price.split(" ")[1]
+        if(euro){
+            price = price+" €"
+            comparPrice = comparPrice+" €"
+        }else{
+            price = price+" $"
+            comparPrice = comparPrice+" $"
+        } 
+        
     }else{
-        price = document.querySelector(bonusPriceSelector).innerHTML;
-    }
-    
+        price = document.querySelector(bonusPriceSelector).innerHTML
+        try{
+            comparPrice = document.querySelector(bonusComparPriceSelector).innerHTML;
+            comparPrice.includes("-") ? comparPrice = comparPrice.split("-")[1] : comparPrice = comparPrice.split(" ")[1]
+        }catch(e){console.log(e)}
+
+        let euro = price.includes("€")
+        price.includes("-") ? price = price.split("-")[1] : price = price.split(" ")[1]
+        if(euro){
+            price = price+" €"
+            comparPrice = comparPrice+" €"
+        }else{
+            price = price+" $"
+            comparPrice = comparPrice+" $"
+        }   
+    } 
+    if(comparPrice == "undefined €" || comparPrice == "undefined $") comparPrice = " "
+    console.log(price+" comp>>>"+comparPrice)   
 
     imgs = document.querySelectorAll(imgsSelector);
     imgs.forEach(function(img){
         let url = img.querySelector("div > img").getAttribute("src");
+        url = url.replace("50x50", "Q90");
         imgsURL.push(url);
     })
 
@@ -117,7 +150,9 @@ function getData() {
     product = {
         "title":title,
         "description":desc,
-        "price":price,
+        "buyingPrice":price,
+        "comparePrice":comparPrice,
+        "salePrice":"00,0",
         "images":imgsURL,
         "properties":arrayProp,
     }

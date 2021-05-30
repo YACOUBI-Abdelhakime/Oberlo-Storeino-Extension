@@ -5,7 +5,7 @@
                 <img height="35" src="icons/logo.png" title="Storeino" alt="storeino">
                 <ul v-if="this.user.fullName == null" class="nav navbar-nav flex-row float-right">
                     <li class="nav-item">
-                        <a href="https://www.google.com" class="nav-link pr-3" target="_blank">Dashboard</a>
+                        <a href="http://localhost:8080/" class="nav-link pr-3" target="_blank">Dashboard</a>
                     </li>
                     <li class="nav-item">
                         <router-link class="nav-link pr-3" to="/login">Sign in</router-link>
@@ -16,7 +16,7 @@
                 </ul>
                 <ul v-else class="nav navbar-nav flex-row float-right">
                     <li class="nav-item">
-                        <a href="https://www.google.com" class="nav-link pr-3" target="_blank">Dashboard</a>
+                        <a href="http://localhost:8080/" class="nav-link pr-3" target="_blank">Dashboard</a>
                     </li>
                     <li class="nav-item">
                         <a v-on:click="logOut" class="nav-link pr-3" >log out</a>
