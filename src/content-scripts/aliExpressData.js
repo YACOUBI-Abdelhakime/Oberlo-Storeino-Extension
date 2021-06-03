@@ -78,41 +78,41 @@ function getData() {
     title = document.querySelector(titleSelector).innerHTML;
     desc = document.querySelector(descSelector).getAttribute("content");
     let priceDiv = document.querySelector(priceSelector);
+    let currency
     if(priceDiv){
         price = document.querySelector(priceSelector).innerHTML
+        currency = price.split(" ")[0]
         try{
             comparPrice = document.querySelector(comparPriceSelector).innerHTML;
             comparPrice.includes("-") ? comparPrice = comparPrice.split("-")[1] : comparPrice = comparPrice.split(" ")[1]
         }catch(e){console.log(e)}
 
-        let euro = price.includes("€")
         price.includes("-") ? price = price.split("-")[1] : price = price.split(" ")[1]
-        if(euro){
-            price = price+" €"
-            comparPrice = comparPrice+" €"
-        }else{
-            price = price+" $"
-            comparPrice = comparPrice+" $"
-        } 
+        //Add currency
+        price = price+" "+currency
+        comparPrice = comparPrice+" "+currency 
+        //Replace ',' with '' Ex= 1,755.55
+        console.log("Price-1 :"+price+"|")
+        price = price.trim().replace(",","")
+        comparPrice = comparPrice.trim().replace(",","")
+        console.log("Price-2 :"+price+"|")
         
-    }else{
+    }else{//Bonus 
         price = document.querySelector(bonusPriceSelector).innerHTML
+        currency = price.split(" ")[0]
         try{
             comparPrice = document.querySelector(bonusComparPriceSelector).innerHTML;
             comparPrice.includes("-") ? comparPrice = comparPrice.split("-")[1] : comparPrice = comparPrice.split(" ")[1]
         }catch(e){console.log(e)}
 
-        let euro = price.includes("€")
         price.includes("-") ? price = price.split("-")[1] : price = price.split(" ")[1]
-        if(euro){
-            price = price+" €"
-            comparPrice = comparPrice+" €"
-        }else{
-            price = price+" $"
-            comparPrice = comparPrice+" $"
-        }   
+        //Add currency
+        price = price+" "+currency
+        comparPrice = comparPrice+" "+currency  
+        price = price.trim().replace(",","")
+        comparPrice = comparPrice.trim().replace(",","")
     } 
-    if(comparPrice == "undefined €" || comparPrice == "undefined $") comparPrice = " "
+    if(comparPrice.includes("undefined")) comparPrice = " "
     console.log(price+" comp>>>"+comparPrice)   
 
     imgs = document.querySelectorAll(imgsSelector);
@@ -152,7 +152,7 @@ function getData() {
         "description":desc,
         "buyingPrice":price,
         "comparePrice":comparPrice,
-        "salePrice":"00,0",
+        "salePrice":"1.00 "+currency,
         "images":imgsURL,
         "properties":arrayProp,
     }
