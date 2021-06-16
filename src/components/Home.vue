@@ -2,7 +2,7 @@
     <div>
         <Header/>
         <div class="d-flex justify-content-center flex-column">
-            <h3 class="pading">welcome <span>{{user.fullName}}</span> in Storino product cloner</h3>
+            <h3 class="pading">welcome <span>{{user.fullName}}</span> in Storeino producte cloner</h3>
         </div>
     </div>
 </template>

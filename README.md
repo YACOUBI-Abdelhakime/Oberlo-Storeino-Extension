@@ -1,4 +1,4 @@
-# vue-tst0
+# Oberlo-Storeino-Extension
 
 ## Project setup
 ```
@@ -10,15 +10,7 @@ npm install
 npm run serve
 ```
 
-### Compiles and minifies for production
-```
-npm run build
-```
+### activate developer mode and add extension to your browser
+### we are done, use it normally
 
-### Lints and fixes files
-```
-npm run lint
-```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
